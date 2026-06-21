@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 const PROTECTED = ["/cart", "/checkout", "/orders", "/profile", "/seller", "/admin"];
 const GUEST_ONLY = ["/login", "/register"];
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const hasToken  = !!req.cookies.get("medistore_token")?.value;
   const userJson  = req.cookies.get("medistore_user")?.value;

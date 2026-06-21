@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/shared/Navbar";
@@ -9,7 +9,7 @@ import { getErrorMessage } from "@/lib/utils";
 import { XCircle, ShoppingCart, Loader2, ArrowLeft } from "lucide-react";
 import toast from "react-hot-toast";
 
-export default function CheckoutCancelPage() {
+function CheckoutCancelContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const orderId = searchParams.get("order_id");
@@ -93,5 +93,13 @@ export default function CheckoutCancelPage() {
       </main>
       <Footer />
     </>
+  );
+}
+
+export default function CheckoutCancelPage() {
+  return (
+    <Suspense fallback={null}>
+      <CheckoutCancelContent />
+    </Suspense>
   );
 }

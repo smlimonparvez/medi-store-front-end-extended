@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
@@ -14,7 +14,7 @@ const schema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
-export default function LoginPage() {
+function LoginForm() {
   const { login } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -33,7 +33,7 @@ export default function LoginPage() {
     const result = schema.safeParse({ email, password });
     if (!result.success) {
       const errs: Record<string, string> = {};
-      result.error.errors.forEach((e) => { if (e.path[0]) errs[e.path[0] as string] = e.message; });
+      result.error.issues.forEach((e) => { if (e.path[0]) errs[e.path[0] as string] = e.message; });
       setErrors(errs);
       return;
     }
@@ -103,5 +103,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }

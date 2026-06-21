@@ -47,7 +47,7 @@ export default function CheckoutPage() {
     const result = schema.safeParse(form);
     if (!result.success) {
       const errs: Record<string, string> = {};
-      result.error.errors.forEach((err) => { if (err.path[0]) errs[err.path[0] as string] = err.message; });
+      result.error.issues.forEach((err) => { if (err.path[0]) errs[err.path[0] as string] = err.message; });
       setErrors(errs);
       return;
     }
