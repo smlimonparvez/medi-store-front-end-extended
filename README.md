@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Medi Store - Medicine E-commerce Platform
 
-## Getting Started
+A modern, full-featured e-commerce platform for purchasing medicines online built with **Next.js**, **React**, and **TypeScript**.
 
-First, run the development server:
+## 🏥 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### For Customers
+- Browse and search medicines by categories
+- Add items to cart and wishlist
+- Secure checkout with Stripe payment integration
+- Order history and tracking
+- User profile management
+
+### For Sellers
+- Dashboard to manage medicines inventory
+- Add and update medicine listings
+- Track and manage orders
+- View sales analytics
+
+### For Admins
+- User management
+- Category management
+- Order monitoring
+- Platform administration
+
+## 🛠️ Tech Stack
+
+- **Frontend Framework**: Next.js 16.2.9
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Lucide React Icons
+- **HTTP Client**: Axios
+- **Payments**: Stripe
+- **Notifications**: React Hot Toast
+- **Validation**: Zod
+- **State Management**: React Context API
+
+## 📁 Project Structure
+
+```
+├── app/                    # Next.js app directory
+│   ├── (customer)/        # Customer routes (cart, checkout, orders)
+│   ├── admin/             # Admin panel
+│   ├── seller/            # Seller dashboard
+│   └── shop/              # Product catalog
+├── components/            # Reusable React components
+├── context/               # React Context (Auth, Cart, Wishlist)
+├── lib/                   # Utilities and helpers
+└── public/                # Static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Installation
 
-## Learn More
+```bash
+# Install dependencies
+npm install
 
-To learn more about Next.js, take a look at the following resources:
+# Run development server
+npm run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Build for production
+npm run build
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Start production server
+npm start
+```
 
-## Deploy on Vercel
+The application will be available at ` https://medi-store-front-end-extended.vercel.app`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📝 Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Create optimized production build
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint checks
+
+## 🔐 Features Highlights
+
+- **Multi-role access control** (Customer, Seller, Admin)
+- **Secure payment processing** via Stripe
+- **Responsive design** with Tailwind CSS
+- **Real-time notifications** using React Hot Toast
+- **Type-safe** development with TypeScript
+
+## 📄 License
+
+Private Project
