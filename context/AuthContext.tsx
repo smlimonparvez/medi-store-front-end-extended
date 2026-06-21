@@ -1,67 +1,69 @@
 "use client";
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import Cookies from "js-cookie";
+import {
+  createContext, useContext, useState,
+  useEffect, ReactNode,
+} from "react";
 import { User } from "@/types";
+import api from "@/lib/axios";
 
 interface AuthContextType {
   user: User | null;
-  token: string | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (user: User, token: string) => void;
+  login: (user: User) => void;
   logout: () => void;
   setUser: (user: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
-  user: null, token: null, isLoading: true,
-  isAuthenticated: false,
+  user: null, isLoading: true, isAuthenticated: false,
   login: () => {}, logout: () => {}, setUser: () => {},
 });
 
+const USER_KEY = "medistore_user";
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUserState] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+  const [user,      setUserState] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const savedToken = Cookies.get("medistore_token");
-    const savedUser  = Cookies.get("medistore_user");
-    if (savedToken && savedUser) {
-      try {
-        setToken(savedToken);
-        setUserState(JSON.parse(savedUser));
-      } catch {
-        Cookies.remove("medistore_token");
-        Cookies.remove("medistore_user");
-      }
+    // Restore user from localStorage on mount (not sensitive — just UI state)
+    try {
+      const saved = localStorage.getItem(USER_KEY);
+      if (saved) setUserState(JSON.parse(saved));
+    } catch {
+      localStorage.removeItem(USER_KEY);
     }
     setIsLoading(false);
   }, []);
 
-  const login = (userData: User, userToken: string) => {
+  // Called after successful login — user data comes from API response body
+  // Token is handled automatically by the browser (HttpOnly cookie from server)
+  const login = (userData: User) => {
     setUserState(userData);
-    setToken(userToken);
-    Cookies.set("medistore_token", userToken, { expires: 7 });
-    Cookies.set("medistore_user", JSON.stringify(userData), { expires: 7 });
+    localStorage.setItem(USER_KEY, JSON.stringify(userData));
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      // Tell server to clear the HttpOnly token cookie
+      await api.post("/auth/logout");
+    } catch {
+      // If server is unreachable, still clear client state
+    }
     setUserState(null);
-    setToken(null);
-    Cookies.remove("medistore_token");
-    Cookies.remove("medistore_user");
+    localStorage.removeItem(USER_KEY);
   };
 
-  // Update user in state + cookie (used after profile update)
+  // Used after profile update to refresh UI state
   const setUser = (userData: User) => {
     setUserState(userData);
-    Cookies.set("medistore_user", JSON.stringify(userData), { expires: 7 });
+    localStorage.setItem(USER_KEY, JSON.stringify(userData));
   };
 
   return (
     <AuthContext.Provider value={{
-      user, token, isLoading, isAuthenticated: !!user,
+      user, isLoading, isAuthenticated: !!user,
       login, logout, setUser,
     }}>
       {children}
