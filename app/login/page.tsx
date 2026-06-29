@@ -90,11 +90,11 @@ function LoginForm() {
             </button>
           </form>
 
-          <div className="mt-6 p-3 bg-brand-50 rounded-xl border border-brand-100 text-xs text-brand-700">
+          {/* <div className="mt-6 p-3 bg-brand-50 rounded-xl border border-brand-100 text-xs text-brand-700">
             <p className="font-semibold mb-1">Demo Admin:</p>
             <p>Email: <span className="font-mono">admin@medistore.com</span></p>
             <p>Password: <span className="font-mono">admin123</span></p>
-          </div>
+          </div> */}
 
           <p className="text-center text-sm text-gray-500 mt-6">
             Don't have an account?{" "}
