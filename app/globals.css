@@ -4,19 +4,80 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── CSS Variables ─────────────────────────────────────────────────────────── */
 :root {
   --font-sora: 'Sora', sans-serif;
   --font-dm:   'DM Sans', sans-serif;
+
+  /* Light mode surface colours */
+  --bg-base:       #f8fffe;
+  --bg-surface:    #ffffff;
+  --bg-subtle:     #f0fdfa;
+  --border-color:  #e5e7eb;
+  --text-primary:  #1a2e2b;
+  --text-secondary:#6b7280;
+  --text-muted:    #9ca3af;
 }
 
+.dark {
+  /* Dark mode surface colours */
+  --bg-base:       #0d1117;
+  --bg-surface:    #161b22;
+  --bg-subtle:     #1c2128;
+  --border-color:  #30363d;
+  --text-primary:  #e6edf3;
+  --text-secondary:#8b949e;
+  --text-muted:    #6e7681;
+}
+
+/* ── Base ───────────────────────────────────────────────────────────────────── */
 body {
   font-family: var(--font-dm);
-  background: #f8fffe;
-  color: #1a2e2b;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  transition: background-color 0.2s, color 0.2s;
 }
 
 h1,h2,h3,h4,h5,h6 { font-family: var(--font-sora); }
 
+/* ── Dark mode utility overrides ────────────────────────────────────────────── */
+.dark .bg-white        { background-color: var(--bg-surface) !important; }
+.dark .bg-gray-50      { background-color: var(--bg-subtle)  !important; }
+.dark .bg-gray-50\/50  { background-color: var(--bg-subtle)  !important; }
+.dark .bg-gray-50\/70  { background-color: var(--bg-subtle)  !important; }
+.dark .border-gray-100 { border-color: var(--border-color)   !important; }
+.dark .border-gray-200 { border-color: var(--border-color)   !important; }
+.dark .text-gray-900   { color: var(--text-primary)          !important; }
+.dark .text-gray-800   { color: var(--text-primary)          !important; }
+.dark .text-gray-700   { color: #cdd5df                      !important; }
+.dark .text-gray-600   { color: var(--text-secondary)        !important; }
+.dark .text-gray-500   { color: var(--text-secondary)        !important; }
+.dark .text-gray-400   { color: var(--text-muted)            !important; }
+.dark .divide-gray-50 > * { border-color: var(--border-color) !important; }
+
+/* Dark input fields */
+.dark .input-field {
+  background-color: var(--bg-subtle) !important;
+  border-color: var(--border-color)  !important;
+  color: var(--text-primary)         !important;
+}
+.dark .input-field::placeholder { color: var(--text-muted) !important; }
+
+/* Dark dashboard topbar */
+.dark header.bg-white {
+  background-color: var(--bg-surface) !important;
+  border-color: var(--border-color)   !important;
+}
+
+/* Dark skeleton */
+.dark .skeleton {
+  background: linear-gradient(90deg, #21262d 25%, #2d333b 50%, #21262d 75%) !important;
+}
+
+/* Dark hover rows */
+.dark .hover\:bg-gray-50\/50:hover { background-color: var(--bg-subtle) !important; }
+
+/* ── Component classes ────────────────────────────────────────────────────── */
 @layer components {
   .btn-primary {
     @apply bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white font-semibold
@@ -52,7 +113,7 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-sora); }
   }
 }
 
-/* Skeleton shimmer */
+/* ── Skeleton shimmer ─────────────────────────────────────────────────────── */
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
   100% { background-position:  200% 0; }
@@ -64,6 +125,9 @@ h1,h2,h3,h4,h5,h6 { font-family: var(--font-sora); }
   border-radius: 8px;
 }
 
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #f0fdfa; }
 ::-webkit-scrollbar-thumb { background: #5eead4; border-radius: 3px; }
+.dark ::-webkit-scrollbar-track { background: #161b22; }
+.dark ::-webkit-scrollbar-thumb { background: #0d9488; }

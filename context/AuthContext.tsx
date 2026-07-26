@@ -10,7 +10,7 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (user: User) => void;
+  login: (user: User, token?: string) => void;
   logout: () => void;
   setUser: (user: User) => void;
 }
@@ -39,7 +39,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // Called after successful login — user data comes from API response body
   // Token is handled automatically by the browser (HttpOnly cookie from server)
-  const login = (userData: User) => {
+  const login = (userData: User, token?: string) => {
+    if (token) localStorage.setItem("medistore_token", token);
     setUserState(userData);
     localStorage.setItem(USER_KEY, JSON.stringify(userData));
   };

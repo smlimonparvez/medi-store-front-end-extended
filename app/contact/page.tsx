@@ -2,7 +2,10 @@
 import { useState } from "react";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
+import api from "@/lib/axios";
+import { getErrorMessage } from "@/lib/utils";
 import { Mail, Phone, MapPin, Send, Loader2, CheckCircle2 } from "lucide-react";
+import toast from "react-hot-toast";
 import { z } from "zod";
 
 const schema = z.object({
@@ -19,10 +22,11 @@ const contactInfo = [
 ];
 
 export default function ContactPage() {
-  const [form, setForm]       = useState({ name: "", email: "", subject: "", message: "" });
-  const [errors, setErrors]   = useState<Record<string, string>>({});
+  const [form,    setForm]    = useState({ name: "", email: "", subject: "", message: "" });
+  const [errors,  setErrors]  = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
-  const [sent, setSent]       = useState(false);
+  const [sent,    setSent]    = useState(false);
+  const [sentName, setSentName] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -30,6 +34,7 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
+
     const result = schema.safeParse(form);
     if (!result.success) {
       const errs: Record<string, string> = {};
@@ -37,11 +42,19 @@ export default function ContactPage() {
       setErrors(errs);
       return;
     }
+
     setLoading(true);
-    // Simulate sending (no backend endpoint for contact yet)
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    setSent(true);
+    try {
+      // Save to database via backend API
+      await api.post("/contact", form);
+      setSentName(form.name);
+      setSent(true);
+      toast.success("Message sent successfully!");
+    } catch (err) {
+      toast.error(getErrorMessage(err) || "Failed to send message. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -54,9 +67,7 @@ export default function ContactPage() {
             style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
           <div className="page-container relative z-10 text-center max-w-2xl mx-auto">
             <h1 className="text-5xl font-bold mb-4" style={{ fontFamily: "var(--font-sora)" }}>Get in Touch</h1>
-            <p className="text-brand-200 text-lg">
-              Have a question, issue, or just want to say hello? We'd love to hear from you.
-            </p>
+            <p className="text-brand-200 text-lg">Have a question, issue, or just want to say hello? We'd love to hear from you.</p>
           </div>
         </section>
 
@@ -64,12 +75,8 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 max-w-5xl mx-auto">
             {/* Contact info */}
             <div className="space-y-6">
-              <h2 className="font-bold text-2xl text-gray-900" style={{ fontFamily: "var(--font-sora)" }}>
-                Contact Information
-              </h2>
-              <p className="text-gray-500 text-sm leading-relaxed">
-                Reach us through any of these channels and we'll get back to you as soon as possible.
-              </p>
+              <h2 className="font-bold text-2xl text-gray-900" style={{ fontFamily: "var(--font-sora)" }}>Contact Information</h2>
+              <p className="text-gray-500 text-sm leading-relaxed">Reach us through any of these channels and we'll get back to you as soon as possible.</p>
               {contactInfo.map((c) => (
                 <div key={c.label} className="flex items-start gap-4">
                   <div className="w-11 h-11 bg-brand-50 rounded-xl flex items-center justify-center shrink-0">
@@ -82,8 +89,6 @@ export default function ContactPage() {
                   </div>
                 </div>
               ))}
-
-              {/* Map placeholder */}
               <div className="bg-brand-50 rounded-2xl border border-brand-100 p-6 text-center mt-4">
                 <MapPin className="w-8 h-8 text-brand-400 mx-auto mb-2" />
                 <p className="text-sm text-brand-600 font-medium">Dhaka, Bangladesh</p>
@@ -91,18 +96,16 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Contact form */}
+            {/* Form */}
             <div className="lg:col-span-2">
               {sent ? (
                 <div className="flex flex-col items-center justify-center h-full text-center py-16 animate-fade-in">
                   <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mb-6">
                     <CheckCircle2 className="w-10 h-10 text-green-500" />
                   </div>
-                  <h3 className="font-bold text-2xl text-gray-900 mb-3" style={{ fontFamily: "var(--font-sora)" }}>
-                    Message Sent!
-                  </h3>
+                  <h3 className="font-bold text-2xl text-gray-900 mb-3" style={{ fontFamily: "var(--font-sora)" }}>Message Sent!</h3>
                   <p className="text-gray-500 max-w-sm">
-                    Thanks for reaching out, <strong>{form.name}</strong>. We'll reply to <strong>{form.email}</strong> within 24 hours.
+                    Thanks for reaching out, <strong>{sentName}</strong>. Your message has been saved and we'll get back to you within 24 hours.
                   </p>
                   <button
                     onClick={() => { setSent(false); setForm({ name: "", email: "", subject: "", message: "" }); }}
@@ -113,9 +116,7 @@ export default function ContactPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-5" noValidate>
-                  <h2 className="font-bold text-2xl text-gray-900" style={{ fontFamily: "var(--font-sora)" }}>
-                    Send Us a Message
-                  </h2>
+                  <h2 className="font-bold text-2xl text-gray-900" style={{ fontFamily: "var(--font-sora)" }}>Send Us a Message</h2>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
