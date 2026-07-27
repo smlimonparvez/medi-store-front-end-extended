@@ -8,9 +8,9 @@ import { useTheme } from "next-themes";
 import {
   ShoppingCart, Menu, X, Pill,
   LogOut, LayoutDashboard, User, Heart,
-  Sun, Moon,
+  Sun, Moon, ChevronDown, Settings, HelpCircle,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 
 // ThemeToggle Navbar
@@ -43,12 +43,15 @@ export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleLogout = async () => {
     await logout();
     toast.success("Logged out successfully");
     router.push("/");
     setOpen(false);
+    setDropdownOpen(false);
   };
 
   const dashLink =
@@ -57,6 +60,17 @@ export default function Navbar() {
     "/orders";
 
   const isActive = (href: string) => pathname === href;
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50 bg-white/95 dark:bg-[#0d1117]/95 backdrop-blur-md border-b border-brand-100 dark:border-[#30363d] shadow-sm">
@@ -118,21 +132,82 @@ export default function Navbar() {
                   </Link>
                 )}
 
-                <Link href={dashLink} className="btn-ghost text-sm gap-1.5 dark:text-gray-300 dark:hover:bg-white/10">
-                  <LayoutDashboard className="w-4 h-4" /> Dashboard
-                </Link>
+                {/* User Dropdown */}
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-brand-50 dark:hover:bg-white/10 transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-brand-100 dark:bg-brand-900 flex items-center justify-center font-bold text-brand-700 dark:text-brand-300 text-sm">
+                      {user?.name?.[0]?.toUpperCase() || "U"}
+                    </div>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                      {user?.name.split(" ")[0]}
+                    </span>
+                    <ChevronDown className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${dropdownOpen ? "rotate-180" : ""}`} />
+                  </button>
 
-                <Link href="/profile" className="btn-ghost text-sm gap-1.5 dark:text-gray-300 dark:hover:bg-white/10">
-                  <User className="w-4 h-4" />
-                  {user?.name.split(" ")[0]}
-                </Link>
+                  {/* Dropdown Menu */}
+                  {dropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#161b22] rounded-2xl shadow-xl border border-gray-100 dark:border-[#30363d] overflow-hidden animate-slide-up">
+                      {/* User Info */}
+                      <div className="px-4 py-3 border-b border-gray-100 dark:border-[#30363d]">
+                        <p className="font-semibold text-gray-900 dark:text-white text-sm">{user?.name}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{user?.email}</p>
+                        <span className="inline-block mt-1 text-xs font-medium px-2 py-0.5 rounded-full bg-brand-50 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 capitalize">
+                          {user?.role}
+                        </span>
+                      </div>
 
-                <button
-                  onClick={handleLogout}
-                  className="p-2 rounded-xl hover:bg-red-50 dark:hover:bg-red-500/20 text-red-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-                >
-                  <LogOut className="w-4 h-4" />
-                </button>
+                      {/* Menu Items */}
+                      <div className="py-1">
+                        <Link
+                          href={dashLink}
+                          onClick={() => setDropdownOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-brand-50 dark:hover:bg-white/10 transition-colors"
+                        >
+                          <LayoutDashboard className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                          Dashboard
+                        </Link>
+                        <Link
+                          href="/profile"
+                          onClick={() => setDropdownOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-brand-50 dark:hover:bg-white/10 transition-colors"
+                        >
+                          <User className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                          My Profile
+                        </Link>
+                        <Link
+                          href="#"
+                          onClick={() => setDropdownOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-brand-50 dark:hover:bg-white/10 transition-colors"
+                        >
+                          <Settings className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                          Settings
+                        </Link>
+                        <Link
+                          href="#"
+                          onClick={() => setDropdownOpen(false)}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-brand-50 dark:hover:bg-white/10 transition-colors"
+                        >
+                          <HelpCircle className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                          Help & Support
+                        </Link>
+                      </div>
+
+                      {/* Logout */}
+                      <div className="border-t border-gray-100 dark:border-[#30363d] py-1">
+                        <button
+                          onClick={handleLogout}
+                          className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/20 transition-colors"
+                        >
+                          <LogOut className="w-4 h-4" />
+                          Logout
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </>
             ) : (
               <>

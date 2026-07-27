@@ -1,6 +1,12 @@
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
-import { ShieldCheck, Truck, HeartPulse, Users, Star, Pill } from "lucide-react";
+import {
+  ShieldCheck,
+  Truck,
+  HeartPulse,
+  Users,
+  Pill,
+} from "lucide-react";
 import Link from "next/link";
 
 const values = [
@@ -31,10 +37,30 @@ const values = [
 ];
 
 const team = [
-  { name: "Dr. Farhan Kabir",    role: "Medical Advisor",       avatar: "F", color: "bg-brand-100 text-brand-700" },
-  { name: "Sadia Rahman",        role: "Head of Operations",    avatar: "S", color: "bg-pink-100 text-pink-700" },
-  { name: "Mehedi Hasan",        role: "Lead Developer",        avatar: "M", color: "bg-emerald-100 text-emerald-700" },
-  { name: "Nusrat Jahan",        role: "Seller Relations",      avatar: "N", color: "bg-purple-100 text-purple-700" },
+  {
+    name: "Dr. Farhan Kabir",
+    role: "Medical Advisor",
+    avatar: "F",
+    color: "bg-brand-100 text-brand-700",
+  },
+  {
+    name: "Sadia Rahman",
+    role: "Head of Operations",
+    avatar: "S",
+    color: "bg-pink-100 text-pink-700",
+  },
+  {
+    name: "Mehedi Hasan",
+    role: "Lead Developer",
+    avatar: "M",
+    color: "bg-emerald-100 text-emerald-700",
+  },
+  {
+    name: "Nusrat Jahan",
+    role: "Seller Relations",
+    avatar: "N",
+    color: "bg-purple-100 text-purple-700",
+  },
 ];
 
 export default function AboutPage() {
@@ -44,18 +70,29 @@ export default function AboutPage() {
       <main>
         {/* Hero */}
         <section className="bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 text-white py-24 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-5"
-            style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+          <div
+            className="absolute inset-0 opacity-5"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle, #fff 1px, transparent 1px)",
+              backgroundSize: "24px 24px",
+            }}
+          />
           <div className="page-container relative z-10 max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 text-brand-200 text-sm font-medium mb-6">
               <Pill className="w-4 h-4" /> About MediStore
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6" style={{ fontFamily: "var(--font-sora)" }}>
+            <h1
+              className="text-5xl md:text-6xl font-bold leading-tight mb-6"
+              style={{ fontFamily: "var(--font-sora)" }}
+            >
               Healthcare Made
               <span className="block text-brand-300">Simple & Accessible</span>
             </h1>
             <p className="text-brand-200 text-xl leading-relaxed">
-              MediStore was founded with one mission: make it easy for every Bangladeshi family to access genuine, affordable over-the-counter medicines — from the comfort of their home.
+              MediStore was founded with one mission: make it easy for every
+              Bangladeshi family to access genuine, affordable over-the-counter
+              medicines — from the comfort of their home.
             </p>
           </div>
         </section>
@@ -66,21 +103,33 @@ export default function AboutPage() {
             <div>
               <h2 className="section-title mb-5">Our Mission</h2>
               <p className="text-gray-600 leading-relaxed mb-4">
-                Every year, millions of people in Bangladesh struggle to find trusted medicines quickly, especially in emergencies. Counterfeit products, inflated prices, and long pharmacy queues make a simple task frustrating.
+                Every year, millions of people in Bangladesh struggle to find
+                trusted medicines quickly, especially in emergencies.
+                Counterfeit products, inflated prices, and long pharmacy queues
+                make a simple task frustrating.
               </p>
               <p className="text-gray-600 leading-relaxed mb-4">
-                MediStore solves this by connecting customers directly with verified pharmacies and sellers — with transparent pricing, genuine products, and cash on delivery.
+                MediStore solves this by connecting customers directly with
+                verified pharmacies and sellers — with transparent pricing,
+                genuine products, and cash on delivery.
               </p>
               <p className="text-gray-600 leading-relaxed">
-                We are not just a marketplace. We're a platform built on trust, serving both the people who need medicines and the sellers who want to grow their pharmacy business online.
+                We are not just a marketplace. We're a platform built on trust,
+                serving both the people who need medicines and the sellers who
+                want to grow their pharmacy business online.
               </p>
             </div>
             <div className="bg-gradient-to-br from-brand-50 to-cyan-50 rounded-3xl p-10 text-center border border-brand-100">
               <span className="text-8xl block mb-4">💊</span>
-              <p className="text-brand-700 font-semibold text-lg" style={{ fontFamily: "var(--font-sora)" }}>
+              <p
+                className="text-brand-700 font-semibold text-lg"
+                style={{ fontFamily: "var(--font-sora)" }}
+              >
                 "Your health is our priority."
               </p>
-              <p className="text-brand-500 text-sm mt-2">— The MediStore Team</p>
+              <p className="text-brand-500 text-sm mt-2">
+                — The MediStore Team
+              </p>
             </div>
           </div>
         </section>
@@ -90,16 +139,30 @@ export default function AboutPage() {
           <div className="page-container">
             <div className="text-center mb-14">
               <h2 className="section-title">Our Core Values</h2>
-              <p className="text-gray-500 mt-3">The principles that guide everything we do</p>
+              <p className="text-gray-500 mt-3">
+                The principles that guide everything we do
+              </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {values.map((v) => (
-                <div key={v.title} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-7 hover:shadow-md transition-shadow">
-                  <div className={`w-12 h-12 rounded-xl ${v.color} flex items-center justify-center mb-5`}>
+                <div
+                  key={v.title}
+                  className="bg-white rounded-2xl border border-gray-100 shadow-sm p-7 hover:shadow-md transition-shadow"
+                >
+                  <div
+                    className={`w-12 h-12 rounded-xl ${v.color} flex items-center justify-center mb-5`}
+                  >
                     <v.icon className="w-6 h-6" />
                   </div>
-                  <h3 className="font-bold text-gray-900 mb-2" style={{ fontFamily: "var(--font-sora)" }}>{v.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{v.desc}</p>
+                  <h3
+                    className="font-bold text-gray-900 mb-2"
+                    style={{ fontFamily: "var(--font-sora)" }}
+                  >
+                    {v.title}
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">
+                    {v.desc}
+                  </p>
                 </div>
               ))}
             </div>
@@ -108,35 +171,130 @@ export default function AboutPage() {
 
         {/* Team */}
         <section className="py-20 page-container">
+          {/* Section Header */}
           <div className="text-center mb-14">
-            <h2 className="section-title">Meet the Team</h2>
-            <p className="text-gray-500 mt-3">The people working to improve your healthcare access</p>
+            <div className="inline-block">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-50 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 text-xs font-semibold tracking-wide uppercase mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-500" />
+                Our Team
+              </span>
+            </div>
+            <h2
+              className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white"
+              style={{ fontFamily: "var(--font-sora)" }}
+            >
+              Meet the Team
+            </h2>
+            <p className="text-gray-500 dark:text-gray-400 mt-3 max-w-md mx-auto">
+              The passionate people working to improve your healthcare access
+            </p>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-3xl mx-auto">
+
+          {/* Team Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {team.map((m) => (
-              <div key={m.name} className="flex flex-col items-center text-center">
-                <div className={`w-20 h-20 rounded-2xl ${m.color} flex items-center justify-center font-bold text-2xl mb-4 shadow-sm`}>
-                  {m.avatar}
+              <div
+                key={m.name}
+                className="group bg-white dark:bg-[#161b22] rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 p-6 flex flex-col items-center text-center border border-gray-100 dark:border-[#30363d]"
+              >
+                {/* Avatar with gradient */}
+                <div className="relative mb-4">
+                  <div
+                    className={`w-24 h-24 rounded-2xl bg-gradient-to-br ${m.color} flex items-center justify-center font-bold text-3xl text-white shadow-lg`}
+                  >
+                    {m.avatar}
+                  </div>
                 </div>
-                <p className="font-bold text-gray-900 text-sm" style={{ fontFamily: "var(--font-sora)" }}>{m.name}</p>
-                <p className="text-gray-400 text-xs mt-1">{m.role}</p>
+
+                {/* Name */}
+                <h3
+                  className="font-bold text-gray-900 dark:text-white text-lg"
+                  style={{ fontFamily: "var(--font-sora)" }}
+                >
+                  {m.name}
+                </h3>
+
+                {/* Role */}
+                <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+                  {m.role}
+                </p>
+
+                {/* Divider */}
+                <div className="w-12 h-0.5 bg-brand-200 dark:bg-brand-800 rounded-full mt-3 mb-4" />
+
+                {/* Social icons */}
+                <div className="flex gap-2">
+                  <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 text-gray-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">
+                    <svg
+                      className="w-4 h-4"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.989C18.343 21.129 22 16.99 22 12z" />
+                    </svg>
+                  </button>
+                  <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 text-gray-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">
+                    <svg
+                      className="w-4 h-4"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.104c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 0021.5-12.192c0-.213-.005-.426-.015-.637.498-.36 1.096-.81 1.5-1.323z" />
+                    </svg>
+                  </button>
+                  <button className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 text-gray-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">
+                    <svg
+                      className="w-4 h-4"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.205 11.387.6.113.82-.26.82-.58 0-.287-.01-1.05-.015-2.06-3.338.726-4.042-1.61-4.042-1.61-.546-1.39-1.335-1.76-1.335-1.76-1.09-.746.082-.73.082-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.4s2.04.133 3 .4c2.29-1.552 3.297-1.23 3.297-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.222 0 1.604-.015 2.898-.015 3.293 0 .322.216.698.825.58C20.565 21.795 24 17.298 24 12c0-6.627-5.373-12-12-12z" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             ))}
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="text-center mt-12">
+            <p className="text-sm text-gray-400 dark:text-gray-500">
+              Want to join our team?
+              <Link
+                href="#"
+                className="text-brand-600 dark:text-brand-400 hover:underline ml-1 font-medium"
+              >
+                View openings →
+              </Link>
+            </p>
           </div>
         </section>
 
         {/* CTA */}
         <section className="py-16 bg-brand-600 text-white">
           <div className="page-container text-center">
-            <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "var(--font-sora)" }}>
+            <h2
+              className="text-3xl font-bold mb-4"
+              style={{ fontFamily: "var(--font-sora)" }}
+            >
               Ready to experience MediStore?
             </h2>
-            <p className="text-brand-200 mb-8 text-lg">Join thousands of customers who trust us every day.</p>
+            <p className="text-brand-200 mb-8 text-lg">
+              Join thousands of customers who trust us every day.
+            </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Link href="/shop" className="bg-white text-brand-700 font-bold px-8 py-3 rounded-xl hover:bg-brand-50 transition-colors shadow-md" style={{ fontFamily: "var(--font-sora)" }}>
+              <Link
+                href="/shop"
+                className="bg-white text-brand-700 font-bold px-8 py-3 rounded-xl hover:bg-brand-50 transition-colors shadow-md"
+                style={{ fontFamily: "var(--font-sora)" }}
+              >
                 Browse Medicines
               </Link>
-              <Link href="/register" className="border-2 border-white/50 text-white font-semibold px-8 py-3 rounded-xl hover:bg-white/10 transition-colors" style={{ fontFamily: "var(--font-sora)" }}>
+              <Link
+                href="/register"
+                className="border-2 border-white/50 text-white font-semibold px-8 py-3 rounded-xl hover:bg-white/10 transition-colors"
+                style={{ fontFamily: "var(--font-sora)" }}
+              >
                 Create Account
               </Link>
             </div>
